@@ -1,5 +1,7 @@
 package CoronaVirusData;
 
+import java.text.DecimalFormat;
+
 public class CoronaVirusData {
 
     private String state;
@@ -7,7 +9,7 @@ public class CoronaVirusData {
     private String confirmed;
     private String deaths;
     private String totalTestResults;
-    private String survivalPercentage;
+    private double survivalPercentage;
 
     public CoronaVirusData(String state, String country, String confirmed, String deaths, String totalTestResults, String datum) {
         this.state = state;
@@ -15,6 +17,13 @@ public class CoronaVirusData {
         this.confirmed = confirmed;
         this.deaths = deaths;
         this.totalTestResults = totalTestResults;
+        if(deaths.equals("") || confirmed.equals("") || deaths.equals("Deaths") || confirmed.equals("Confirmed")) survivalPercentage = 0.0;
+        else {
+            DecimalFormat df = new DecimalFormat("#.##");
+            survivalPercentage = 100.0 - (float)Integer.parseInt(deaths) / Integer.parseInt(confirmed);
+            survivalPercentage = Double.parseDouble(df.format(survivalPercentage));
+        }
+
     }
 
     public CoronaVirusData(){
@@ -62,11 +71,11 @@ public class CoronaVirusData {
     }
 
 
-    public String getSurvivalPercentage() {
+    public double getSurvivalPercentage() {
         return survivalPercentage;
     }
 
-    public void setSurvivalPercentage(String survivalPercentage) {
+    public void setSurvivalPercentage(double survivalPercentage) {
         this.survivalPercentage = survivalPercentage;
     }
 

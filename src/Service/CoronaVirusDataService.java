@@ -35,17 +35,15 @@ public class CoronaVirusDataService {
     }
 
 
-
     public void parseDoc() throws FileNotFoundException {
         String newDoc = doc.getElementsByTag("body").text();
         List<String> data = new ArrayList(Arrays.asList(newDoc.split("\\s*,\\s*")));
-        for(int i=0;i<1003;i+=17){
+        for(int i=17;i<1003;i+=17){
             CoronaVirusData cvd = new CoronaVirusData(data.get(i),data.get(i+1),data.get(i+5),data.get(i+6),data.get(i+11),data.get(i+16));
-            if(i != 0) {
-                if(cvd.getDeaths().compareTo("") != 0) CoronaVirusDataController.addDeaths(Integer.parseInt(data.get(i + 6)));
-                if(cvd.getConfirmed().compareTo("") != 0) CoronaVirusDataController.addConfirmed(Integer.parseInt(cvd.getConfirmed()));
+                CoronaVirusDataController.addDeaths(Integer.parseInt(data.get(i + 6)));
+                CoronaVirusDataController.addConfirmed(Integer.parseInt(cvd.getConfirmed()));
                 if(cvd.getTotalTestResults().compareTo("") != 0) CoronaVirusDataController.addCases((long)Float.parseFloat(cvd.getTotalTestResults()));
-            }
+
             if(data.get(i).equals("Hospitalization_Rate Alabama")) cvd.setState("Alabama");
             CoronaVirusDataController cvdc = new CoronaVirusDataController();
             cvdc.addToData(cvd);

@@ -20,5 +20,15 @@
             <Font size="18.0" />
          </font>
       </TextField>
+      <TableView fx:id="covidTable" layoutX="109.0" layoutY="320.0" prefHeight="415.0" prefWidth="1000.0">
+        <columns>
+          <TableColumn fx:id="stateCol" prefWidth="200.0" text="State/Province" />
+          <TableColumn fx:id="countryCol" prefWidth="200.0" text="Country" />
+            <TableColumn fx:id="confirmedCol" prefWidth="200.0" text="Confirmed" />
+            <TableColumn fx:id="deathsCol" prefWidth="200.0" text="Deaths" />
+            <TableColumn fx:id="surviveCol" prefWidth="200.0" text="Survival Percentage" />
+        </columns>
+      </TableView>
+      <TextField fx:id="survivalTxt" layoutX="498.0" layoutY="196.0" prefHeight="43.0" prefWidth="205.0" promptText="Survival Percentage" />
    </children>
 </AnchorPane>
