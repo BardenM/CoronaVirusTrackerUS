@@ -7,8 +7,7 @@ public class CoronaVirusData {
     private String confirmed;
     private String deaths;
     private String totalTestResults;
-    private String totalDailyCases;
-
+    private String survivalPercentage;
 
     public CoronaVirusData(String state, String country, String confirmed, String deaths, String totalTestResults, String datum) {
         this.state = state;
@@ -18,11 +17,9 @@ public class CoronaVirusData {
         this.totalTestResults = totalTestResults;
     }
 
-
-    public static void addToData(CoronaVirusData cvd){
+    public CoronaVirusData(){
 
     }
-
 
     public String getState() {
         return state;
@@ -65,12 +62,13 @@ public class CoronaVirusData {
     }
 
 
-
-    public String getTotalDailyCases() {
-        return totalDailyCases;
+    public String getSurvivalPercentage() {
+        return survivalPercentage;
     }
 
-    public void setTotalDailyCases(String totalDailyCases) {
-        this.totalDailyCases = totalDailyCases;
+    public void setSurvivalPercentage(String survivalPercentage) {
+        this.survivalPercentage = survivalPercentage;
     }
+
+
 }

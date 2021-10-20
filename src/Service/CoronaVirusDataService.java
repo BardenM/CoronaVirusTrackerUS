@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 
 public class CoronaVirusDataService {
@@ -35,7 +32,6 @@ public class CoronaVirusDataService {
             doc = Jsoup.connect("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports_us/" + yesterday + ".csv").get();
         }
 
-//        System.out.println(doc);
     }
 
 
@@ -43,13 +39,16 @@ public class CoronaVirusDataService {
     public void parseDoc() throws FileNotFoundException {
         String newDoc = doc.getElementsByTag("body").text();
         List<String> data = new ArrayList(Arrays.asList(newDoc.split("\\s*,\\s*")));
-//        data.set(17,"hospitalization_rate");
-//        data.add(18,"Alabama");
         for(int i=0;i<1003;i+=17){
-            CoronaVirusData coronaVirusData = new CoronaVirusData(data.get(i),data.get(i+1),data.get(i+5),data.get(i+6),data.get(i+11),data.get(i+16));
-            if(data.get(i).equals("Hospitalization_Rate Alabama")) coronaVirusData.setState("Alabama");
+            CoronaVirusData cvd = new CoronaVirusData(data.get(i),data.get(i+1),data.get(i+5),data.get(i+6),data.get(i+11),data.get(i+16));
+            if(i != 0) {
+                if(cvd.getDeaths().compareTo("") != 0) CoronaVirusDataController.addDeaths(Integer.parseInt(data.get(i + 6)));
+                if(cvd.getConfirmed().compareTo("") != 0) CoronaVirusDataController.addConfirmed(Integer.parseInt(cvd.getConfirmed()));
+                if(cvd.getTotalTestResults().compareTo("") != 0) CoronaVirusDataController.addCases((long)Float.parseFloat(cvd.getTotalTestResults()));
+            }
+            if(data.get(i).equals("Hospitalization_Rate Alabama")) cvd.setState("Alabama");
             CoronaVirusDataController cvdc = new CoronaVirusDataController();
-            cvdc.addToData(coronaVirusData);
+            cvdc.addToData(cvd);
         }
 
 
